@@ -8,10 +8,10 @@ class purge_cmd(commands.Cog):
 
     @commands.command()
     async def purge(self, ctx, number: int):
-        if ctx.message.author.id in MEMBERS_WITH_PERMS:    
+        if ctx.message.author.id in MEMBERS_WITH_PERMS:
             channel = ctx.message.channel
             await channel.purge(limit=number+1)
-            channel = client.get_channel(LOGGING_CHANNEL)
+            channel = self.client.get_channel(LOGGING_CHANNEL)
             embed=discord.Embed(
                 color=0xff0000, 
                 title=f"Purge: [{ctx.message.author}] in #{ctx.message.channel}",
@@ -21,7 +21,7 @@ class purge_cmd(commands.Cog):
         else:
             channel = ctx.message.channel
             await channel.send(f"You do not have permission to do that, {ctx.message.author}...")
-            channel = client.get_channel(LOGGING_CHANNEL)
+            channel = self.client.get_channel(LOGGING_CHANNEL)
             embed=discord.Embed(
                 color=0xff0000, 
                 title=f"Purge Attempt: [{ctx.message.author}] in #{ctx.message.channel}"
