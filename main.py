@@ -11,6 +11,7 @@ logging.basicConfig(level="INFO")
 logger = logging.getLogger("main.py")
 
 extensions = [
+    "events.on_error",
     "events.on_invite_create",
     "events.on_invite_delete",
     #"events.on_member_ban",
@@ -22,9 +23,13 @@ extensions = [
     "events.on_ready",
 
     "commands.ban",
+    "commands.kick",
     "commands.ping",
     "commands.purge",
-    "commands.unban"
+    "commands.setup",
+    "commands.unban",
+
+    "auto_announcer.eventhandler"
 ]
 
 for extension in extensions:
