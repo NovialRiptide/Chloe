@@ -6,6 +6,8 @@ MEMBERS_WITH_PERMS = [182288858782629888, 389932655111831562]
 
 FOOTER = "Bot Developed by Novial // Andrew Hong"
 
+INVALID_DATABASE_ERROR = f"It seems like you are not in the Chloë database. Do ``!setup`` to continue."
+
 MISSING_ARGUMENTS_ERROR = "You are missing some arguments..."
 TOO_MANY_ARGUMENTS_ERROR = "You have too many arguments!"
 USER_INPUT_ERROR = "You have inputted your arguments wrong!"

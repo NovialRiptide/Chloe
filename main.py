@@ -29,7 +29,8 @@ extensions = [
     "commands.setup",
     "commands.unban",
 
-    "auto_announcer.eventhandler"
+    "auto_announcer.eventhandler",
+    "auto_announcer.trigger"
 ]
 
 for extension in extensions:

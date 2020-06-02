@@ -7,6 +7,7 @@ class purge_cmd(commands.Cog):
         self.client = client
 
     @commands.command()
+    @commands.has_guild_permissions(manage_messages=True)
     async def purge(self, ctx, number: int):
         if ctx.message.author.id in MEMBERS_WITH_PERMS:
             channel = ctx.message.channel

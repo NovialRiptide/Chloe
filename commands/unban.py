@@ -3,11 +3,12 @@ import time
 from discord.ext import commands
 from vars import *
 
-class ban_cmd(commands.Cog):
+class unban_cmd(commands.Cog):
     def __init__(self, client):
         self.client = client
 
     @commands.command()
+    @commands.has_guild_permissions(ban_members=True)
     async def unban(self, ctx, id: int, *, reason: str):
         member = discord.Object(id=id)
         if ctx.message.author.id in MEMBERS_WITH_PERMS or ctx.message.author == ctx.message.guild.owner:
@@ -35,4 +36,4 @@ class ban_cmd(commands.Cog):
             await channel.send(embed=embed)
 
 def setup(bot):
-    bot.add_cog(ban_cmd(bot))
+    bot.add_cog(unban_cmd(bot))

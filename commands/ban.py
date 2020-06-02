@@ -8,6 +8,7 @@ class ban_cmd(commands.Cog):
         self.client = client
 
     @commands.command()
+    @commands.has_guild_permissions(ban_members=True)
     async def ban(self, ctx, member: discord.Member, *, reason: str):
         if ctx.message.author.id in MEMBERS_WITH_PERMS or ctx.message.author == ctx.message.guild.owner:
             channel = ctx.message.channel

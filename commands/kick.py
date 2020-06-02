@@ -8,6 +8,7 @@ class kick_cmd(commands.Cog):
         self.client = client
 
     @commands.command()
+    @commands.has_guild_permissions(kick_members=True)
     async def kick(self, ctx, member: discord.Member, *, reason: str):
         if ctx.message.author.id in MEMBERS_WITH_PERMS or ctx.message.author == ctx.message.guild.owner:
             channel = ctx.message.channel
