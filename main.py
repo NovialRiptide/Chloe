@@ -3,7 +3,7 @@ import logging
 import traceback
 from discord.ext import commands
 
-TOKEN = "NzE2Nzk2MDYyOTUzNjM1OTQx.XtQ_jg.Ezd74DZ2cJ9vj7Qw_6gSicwQbKo"
+TOKEN = <PUT YOUR TOKEN HERE!!!>
 
 client = commands.Bot(command_prefix="!")
 
