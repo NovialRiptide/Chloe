@@ -14,7 +14,9 @@ class on_member_remove_event(commands.Cog):
             title=f"{member} has left/been banned the server", 
             description=f"User ID: {member.id}"
         )
-        if await member.guild.fetch_ban(member) == False:
+        try:
+            await member.guild.fetch_ban(member)
+        except:
             await channel.send(embed=embed)
 
 def setup(client):

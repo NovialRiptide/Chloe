@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands, tasks
 import json
+import random
 from vars import *
 
 class event_handler(commands.Cog):
@@ -17,9 +18,18 @@ class event_handler(commands.Cog):
         try:
             with open("servers.json") as f:
                 servers = json.load(f)
-            channel = self.client.get_channel(AUTO_ANNOUNCE_CHANNEL)
+
+            channel = self.client.get_channel(AUTO_ANNOUNCE_CHANNEL)            
+            msg = random.randint(0, len(servers[str(channel.guild.id)]["auto_messages"]))
+            msg_id = list(servers[str(channel.guild.id)]["auto_messages"].keys())[msg]
+            msg_data = servers[str(channel.guild.id)]["auto_messages"][msg_id]
+
             if servers[str(channel.guild.id)]["auto_announcer"]:
-                await channel.send("WEEEEE")
+                embed=discord.Embed(
+                    title=msg_data["title"],
+                    description=msg_data["desc"]
+                )
+                await channel.send(embed=embed)
         except:
             pass
 

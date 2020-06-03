@@ -10,11 +10,18 @@ class setup_cmd(commands.Cog):
     @commands.command()
     async def setup(self, ctx):
         channel = ctx.message.channel
+        template = {
+            str(ctx.message.guild.id): {
+                "auto_messages": {},
+                "logging_channel": None,
+                "join_leave_channel": None
+            }
+        }
         with open("servers.json") as f:
             servers = json.load(f)
         try:
             with open("servers.json", "w") as json_file:
-                json.dump({str(ctx.message.guild.id): {}}, json_file)
+                json.dump(template, json_file)
 
             await channel.send("This server has been added to the Chloë database!")
         except KeyError:
