@@ -35,8 +35,10 @@ class sessions(commands.Cog):
                     title=f"session ongoing",
                     description=f"shit"
                 )
+                embed.set_footer(text=f"{message.author.id}")
                 await channel.edit(category=occupied_category)
                 await channel_history[1].edit(embed=embed)
+                await message.author.add_roles(channel.guild.get_role(servers[str(message.guild.id)]["in_session_role"]))
                 if len(available_category.channels) <= MAX_NUMBER_OF_AVAILABLE_SESSIONS:
                     embed=discord.Embed(
                         title=f"session available",
@@ -60,15 +62,26 @@ class sessions(commands.Cog):
             if is_a_session_channel and channel.category_id == occupied_category_id and channel_history[0].author.id != self.client.user.id:
                 check = message.channel.id in occupied_category.channels
                 try:
-                    await self.client.wait_for("message", check=check, timeout=60*30)
+                    await self.client.wait_for("message", check=check, timeout=60*5)
                 except asyncio.TimeoutError:
                     embed=discord.Embed(
                         title=f"session now dormant",
                         description=f"shit"
                     )
+                    async def find_session_user(limit):
+                        async for message in channel.history(limit=limit):
+                            if message.author == self.client.user:
+                                try:
+                                    return int(message.embeds[0].footer.text)
+                                except IndexError:
+                                    pass
+                        await find_session_user(limit*2)
+
+                    await (message.guild.get_member(await find_session_user(50))).remove_roles(channel.guild.get_role(servers[str(message.guild.id)]["in_session_role"]))
                     await channel.edit(category=dormant_category)
                     await channel.send(embed=embed)
         except:
+            raise
             pass
 
 def setup(client):

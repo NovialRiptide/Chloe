@@ -39,7 +39,9 @@ extensions = [
     "sessions.close_cmd",
     "sessions.debug_cmd",
     "events.on_message",
-    "sessions.session_setup"
+    "sessions.session_setup",
+    "sessions.set_help_role_cmd",
+    "sessions.set_in_session_cmd"
 ]
 
 for extension in extensions:

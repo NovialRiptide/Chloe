@@ -17,21 +17,34 @@ class sessions(commands.Cog):
 
             available_category_id = servers[str(channel.guild.id)]["session_categories"]["available"]
             available_category = discord.utils.get(self.client.get_all_channels(), id=available_category_id)
+            available_category_channels = available_category.text_channels
+
             occupied_category_id = servers[str(channel.guild.id)]["session_categories"]["occupied"]
             occupied_category = discord.utils.get(self.client.get_all_channels(), id=occupied_category_id)
+            occupied_category_channels = occupied_category.text_channels
+
             dormant_category_id = servers[str(channel.guild.id)]["session_categories"]["dormant"]
             dormant_category = discord.utils.get(self.client.get_all_channels(), id=dormant_category_id)
+            dormant_category_channels = dormant_category.text_channels
 
-            available_category_channels = len(available_category.channels)
-            occupied_category_channels = len(occupied_category.channels) 
-            dormant_category_channels = len(dormant_category.channels)
+            role_being_helped = ctx.guild.get_role(servers[str(channel.guild.id)]["session_helper_role"])
+            helper = ctx.guild.get_role(servers[str(channel.guild.id)]["session_helper_role"])
 
-            if available_category_channels < MAX_NUMBER_OF_AVAILABLE_SESSIONS:
-                for x in range(MAX_NUMBER_OF_AVAILABLE_SESSIONS):
-                    channel = dormant_category.channels[-1]
-                    await channel.edit(category=available_category)
-            channel = ctx.channel
-            await channel.send("Debugging..")
+            await available_category.set_permissions(ctx.guild.default_role, read_messages=True, send_messages=True)
+            await available_category.set_permissions(ctx.guild.default_role, overwrite=None)
+
+            await occupied_category.set_permissions(ctx.guild.default_role, send_messages=False, read_messages=False)
+            await occupied_category.set_permissions(ctx.guild.default_role, overwrite=None)
+
+            await occupied_category.set_permissions(role_being_helped, send_messages=False, read_messages=True)
+            await occupied_category.set_permissions(role_being_helped, overwrite=None)
+
+            await dormant_category.set_permissions(ctx.guild.default_role, send_messages=False)
+            await dormant_category.set_permissions(ctx.guild.default_role, overwrite=None)
+
+            await dormant_category.set_permissions(helper, send_messages=False)
+            await dormant_category.set_permissions(helper, overwrite=None)
+            await ctx.channel.send("Finished! (MAKE SURE YOU TURNED ON SYNC FOR ALL THE CHANNELS)")
 
         except:
             raise
