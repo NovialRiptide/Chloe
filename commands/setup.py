@@ -13,8 +13,9 @@ class setup_cmd(commands.Cog):
         template = {
             str(ctx.message.guild.id): {
                 "auto_messages": {},
-                "logging_channel": None,
-                "join_leave_channel": None
+                "auto_announcer": True,
+                "channels": {},
+                "session_categories": {}
             }
         }
         with open("servers.json") as f:

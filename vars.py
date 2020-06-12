@@ -1,13 +1,47 @@
-JOIN_LEAVE_CHANNEL = 716801483533844571
-LOGGING_CHANNEL = 716810086852329553
-AUTO_ANNOUNCE_CHANNEL = 717287426309226556
-
 MEMBERS_WITH_PERMS = [182288858782629888, 389932655111831562]
 
 MEMBERS_BLACKLISTED = [
     234619517878272000, # callum
-    
+    563151366378225694, # garlic
+    658632975482617889, # joe
 ]
+
+VALID_CHANNEL_JSON_KEYS = {
+    "logging": "int",
+    "sessions": "list",
+    "join_leave": "int",
+    "auto_announce": "int"
+}
+
+VALID_SESSION_CATEGORIES = [
+    "dormant",
+    "available",
+    "occupied"
+]
+
+BLACKLISTED_WORDS = [
+    "nigger",
+    "nigga",
+    "nibba",
+    "niga",
+    "redskin",
+    "red skin"
+]
+
+POSITIVE_WORDS = [
+
+]
+
+NEGATIVE_WORDS = [
+    "stupid"
+]
+
+PHRASES = [
+    ["ur", "gay"],
+    ["chloe", "is", NEGATIVE_WORDS]
+]
+
+MAX_NUMBER_OF_AVAILABLE_SESSIONS = 2
 
 FOOTER = "Bot Developed by Novial // Andrew Hong"
 

@@ -3,7 +3,7 @@ import logging
 import traceback
 from discord.ext import commands
 
-TOKEN = <PUT YOUR TOKEN HERE!!!>
+TOKEN = "NzE2Nzk2MDYyOTUzNjM1OTQx.XuGszw.1MCUZVqqmlOjS1nYYuPa7nJ5fnI"
 
 client = commands.Bot(command_prefix="!")
 
@@ -20,18 +20,26 @@ extensions = [
     #"events.on_member_unban",
     #"events.on_message_delete",
     #"events.on_message_edit",
-    #"events.on_ready",
+    "events.on_ready",
 
     #"commands.ban",
-    #"commands.json",
+    "commands.channel_setup",
+    "commands.json_database",
     #"commands.kick",
     "commands.ping",
+    "commands.say",
     #"commands.purge",
     "commands.setup",
+    "commands.tsc_rep",
     #"commands.unban",
 
     "auto_announcer.eventhandler",
-    "auto_announcer.trigger"
+    "auto_announcer.trigger",
+
+    "sessions.close_cmd",
+    "sessions.debug_cmd",
+    "events.on_message",
+    "sessions.session_setup"
 ]
 
 for extension in extensions:

@@ -43,7 +43,7 @@ class trigger_cmd(commands.Cog):
         except:
             await ctx.send(INVALID_DATABASE_ERROR)
 
-    @announcer.command()
+    @announcer.command(aliases=["add"])
     @commands.has_guild_permissions(administrator=True)
     async def add_msg(self, ctx, *, title: str):
         try:
@@ -54,6 +54,7 @@ class trigger_cmd(commands.Cog):
 
             servers[str(ctx.message.guild.id)]["auto_messages"][str(msg_id)] = {}
             servers[str(ctx.message.guild.id)]["auto_messages"][str(msg_id)]["title"] = title
+            servers[str(ctx.message.guild.id)]["auto_messages"][str(msg_id)]["desc"] = "Insert message description here.."
                 
             with open("servers.json", "w") as json_file:
                 json.dump(servers, json_file)
@@ -62,7 +63,7 @@ class trigger_cmd(commands.Cog):
             raise
             await ctx.send(INVALID_DATABASE_ERROR)
 
-    @announcer.command()
+    @announcer.command(aliases=["delete"])
     @commands.has_guild_permissions(administrator=True)
     async def del_msg(self, ctx, msg_id: int):
         try:
@@ -77,7 +78,7 @@ class trigger_cmd(commands.Cog):
         except:
             await ctx.send(INVALID_DATABASE_ERROR)
 
-    @announcer.command()
+    @announcer.command(aliases=["edit_title"])
     @commands.has_guild_permissions(administrator=True)
     async def edit_msg_title(self, ctx, msg_id: int, *, title: str):
         try:
@@ -92,7 +93,7 @@ class trigger_cmd(commands.Cog):
         except:
             await ctx.send(INVALID_DATABASE_ERROR)
 
-    @announcer.command()
+    @announcer.command(aliases=["edit_desc"])
     @commands.has_guild_permissions(administrator=True)
     async def edit_msg_desc(self, ctx, msg_id: int, *, desc: str):
         try:
@@ -107,14 +108,17 @@ class trigger_cmd(commands.Cog):
         except:
             await ctx.send(INVALID_DATABASE_ERROR)
 
-    @announcer.command()
+    @announcer.command(aliases=["msgs"])
     @commands.has_guild_permissions(administrator=True)
     async def messages(self, ctx):
         try:
             with open("servers.json") as f:
                 servers = json.load(f)
-                
-            await ctx.send(servers[str(ctx.message.guild.id)]["auto_messages"])
+            messages = json.dumps(servers[str(ctx.message.guild.id)]["auto_messages"], indent=4)
+            if messages == "\{\}":
+                await ctx.send("```You don't have any messages in the Chloë database...```")
+            else:
+                await ctx.send(f"```{messages}```")
         except:
             await ctx.send(INVALID_DATABASE_ERROR)
 
