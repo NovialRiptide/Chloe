@@ -55,3 +55,6 @@ BOT_NO_PERMISSION_ERROR = "I do not have permission to do this..."
 UNKNOWN_COMMAND_ERROR = "I have never heard of this command before."
 
 FAKE_ERROR = "An error has occurred. Please try again later."
+
+def tsc_ongoing_session(user):
+    return f"__**How to ask for help:**__\n:question: | Post your question! *Don't just say \"help\".*\n:eye: | Add any images, sources, or texts that will help the tutors.\n:school_satchel: | Inform the tutor of what level the question is. *(e.g. trigonometry, calculus BC, stoichiometry)*\n\n**Once the above is complete, ping the respective tutor role once!**\n\n{user}"
