@@ -39,19 +39,22 @@ class rep_cmd(commands.Cog):
             with open("servers.json") as f:
                 servers = json.load(f)
                 
-            try:
-                if ctx.author.id in servers[str(ctx.guild.id)]["reputation"][str(member.id)]["members_already_voted"]:
-                    await ctx.send(f"You have already affected {member.name}'s reputation!")
-                else:
+            if ctx.author.id != member.id:
+                try:
+                    if ctx.author.id in servers[str(ctx.guild.id)]["reputation"][str(member.id)]["members_already_voted"]:
+                        await ctx.send(f"You have already affected {member.name}'s reputation!")
+                    else:
+                        servers[str(ctx.guild.id)]["reputation"][str(member.id)]["upvotes"] += 1
+                        servers[str(ctx.guild.id)]["reputation"][str(member.id)]["members_already_voted"].append(ctx.author.id)
+                        await ctx.send(f"You have upvoted {member.name}!")
+                except KeyError:
+                    servers[str(ctx.guild.id)]["reputation"][str(member.id)] = template
                     servers[str(ctx.guild.id)]["reputation"][str(member.id)]["upvotes"] += 1
                     servers[str(ctx.guild.id)]["reputation"][str(member.id)]["members_already_voted"].append(ctx.author.id)
-                    await ctx.send(f"You have upvoted {member.name}!")
-            except KeyError:
-                servers[str(ctx.guild.id)]["reputation"][str(member.id)] = template
-                servers[str(ctx.guild.id)]["reputation"][str(member.id)]["upvotes"] += 1
-                servers[str(ctx.guild.id)]["reputation"][str(member.id)]["members_already_voted"].append(ctx.author.id)
 
-                await ctx.send(f"You have upvoted {member.name}!")
+                    await ctx.send(f"You have upvoted {member.name}!")
+            else:
+                await ctx.send("Now why would you do that..")
             with open("servers.json", "w") as json_file:
                 json.dump(servers, json_file)
         except:
@@ -65,19 +68,23 @@ class rep_cmd(commands.Cog):
             with open("servers.json") as f:
                 servers = json.load(f)
 
-            try:
-                if ctx.author.id in servers[str(ctx.guild.id)]["reputation"][str(member.id)]["members_already_voted"]:
-                    await ctx.send(f"You have already affected {member.name}'s reputation!")
-                else:
+            if ctx.author.id != member.id:
+                try:
+                    if ctx.author.id in servers[str(ctx.guild.id)]["reputation"][str(member.id)]["members_already_voted"]:
+                        await ctx.send(f"You have already affected {member.name}'s reputation!")
+                    else:
+                        servers[str(ctx.guild.id)]["reputation"][str(member.id)]["downvotes"] += 1
+                        servers[str(ctx.guild.id)]["reputation"][str(member.id)]["members_already_voted"].append(ctx.author.id)
+                        await ctx.send(f"You have downvoted {member.name}!")
+                except KeyError:
+                    servers[str(ctx.guild.id)]["reputation"][str(member.id)] = template
                     servers[str(ctx.guild.id)]["reputation"][str(member.id)]["downvotes"] += 1
                     servers[str(ctx.guild.id)]["reputation"][str(member.id)]["members_already_voted"].append(ctx.author.id)
-                    await ctx.send(f"You have downvoted {member.name}!")
-            except KeyError:
-                servers[str(ctx.guild.id)]["reputation"][str(member.id)] = template
-                servers[str(ctx.guild.id)]["reputation"][str(member.id)]["downvotes"] += 1
-                servers[str(ctx.guild.id)]["reputation"][str(member.id)]["members_already_voted"].append(ctx.author.id)
 
                 await ctx.send(f"You have downvoted {member.name}!")
+            else:
+                await ctx.send("Now why would you do that..")
+
             with open("servers.json", "w") as json_file:
                 json.dump(servers, json_file)
         except:
@@ -91,7 +98,12 @@ class rep_cmd(commands.Cog):
                 servers = json.load(f)
 
             try:
-                await ctx.send(servers[str(ctx.guild.id)]["reputation"][str(member.id)])
+                quote = QUOTES[random.randint(0, len(QUOTES)-1)]
+                rep_data = servers[str(ctx.guild.id)]["reputation"][str(member.id)]
+                embed=discord.Embed(title=f"{member}'s profile", description=f"{quote}")
+                embed.add_field(name="Reputation", value=f"{rep_data['upvotes']-rep_data['downvotes']} (+{rep_data['upvotes']}/-{rep_data['downvotes']})", inline=False)
+
+                await ctx.send(embed=embed)
             except KeyError:
                 servers[str(ctx.guild.id)]["reputation"][str(member.id)] = template
 
@@ -99,6 +111,7 @@ class rep_cmd(commands.Cog):
             with open("servers.json", "w") as json_file:
                 json.dump(servers, json_file)
         except:
+            raise
             await ctx.send(INVALID_DATABASE_ERROR)
 
 def setup(bot):

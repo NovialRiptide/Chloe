@@ -27,23 +27,18 @@ class sessions(commands.Cog):
             dormant_category = discord.utils.get(self.client.get_all_channels(), id=dormant_category_id)
             dormant_category_channels = dormant_category.text_channels
 
-            role_being_helped = ctx.guild.get_role(servers[str(channel.guild.id)]["session_helper_role"])
+            role_being_helped = ctx.guild.get_role(servers[str(channel.guild.id)]["in_session_role"])
             helper = ctx.guild.get_role(servers[str(channel.guild.id)]["session_helper_role"])
 
             await available_category.set_permissions(ctx.guild.default_role, read_messages=True, send_messages=True)
-            await available_category.set_permissions(ctx.guild.default_role, overwrite=None)
+            await available_category.set_permissions(role_being_helped, read_messages=True, send_messages=False)
 
             await occupied_category.set_permissions(ctx.guild.default_role, send_messages=False, read_messages=False)
-            await occupied_category.set_permissions(ctx.guild.default_role, overwrite=None)
-
-            await occupied_category.set_permissions(role_being_helped, send_messages=False, read_messages=True)
-            await occupied_category.set_permissions(role_being_helped, overwrite=None)
+            await occupied_category.set_permissions(role_being_helped, send_messages=True, read_messages=True)
+            await occupied_category.set_permissions(helper, send_messages=True, read_messages=True)
 
             await dormant_category.set_permissions(ctx.guild.default_role, send_messages=False)
-            await dormant_category.set_permissions(ctx.guild.default_role, overwrite=None)
-
             await dormant_category.set_permissions(helper, send_messages=False)
-            await dormant_category.set_permissions(helper, overwrite=None)
             await ctx.channel.send("Finished! (MAKE SURE YOU TURNED ON SYNC FOR ALL THE CHANNELS)")
 
         except:

@@ -32,21 +32,21 @@ class sessions(commands.Cog):
 
             if is_a_session_channel and channel.category_id == available_category_id and channel_history[0].author.id != self.client.user.id:
                 embed=discord.Embed(
-                    title=f"session ongoing",
-                    description=f"shit"
+                    title=f"Channel is now in session...",
+                    description=tsc_ongoing_session(message.author.mention)
                 )
                 embed.set_footer(text=f"{message.author.id}")
-                await channel.edit(category=occupied_category)
+                await channel.edit(category=occupied_category, sync_permissions=True)
                 await channel_history[1].edit(embed=embed)
                 await message.author.add_roles(channel.guild.get_role(servers[str(message.guild.id)]["in_session_role"]))
                 if len(available_category.channels) <= MAX_NUMBER_OF_AVAILABLE_SESSIONS:
                     embed=discord.Embed(
-                        title=f"session available",
-                        description=f"shit"
+                        title=f"Session available",
+                        description=f"Speak in this channel to start your tutor session!"
                     )
                     channel = dormant_category.channels[-1]
                     channel_history = await channel.history(limit=1).flatten()
-                    await channel.edit(category=available_category)
+                    await channel.edit(category=available_category, sync_permissions=True)
                     await channel_history[0].edit(embed=embed)
                     
             channel = message.channel
@@ -62,11 +62,11 @@ class sessions(commands.Cog):
             if is_a_session_channel and channel.category_id == occupied_category_id and channel_history[0].author.id != self.client.user.id:
                 check = message.channel.id in occupied_category.channels
                 try:
-                    await self.client.wait_for("message", check=check, timeout=60*5)
+                    await self.client.wait_for("message", check=check, timeout=60*30)
                 except asyncio.TimeoutError:
                     embed=discord.Embed(
-                        title=f"session now dormant",
-                        description=f"shit"
+                        title=f"This channel has been marked as dormant",
+                        description=f"If you're a staff member and you have permission to speak in this channel, do not do it! It will break the bot!"
                     )
                     async def find_session_user(limit):
                         async for message in channel.history(limit=limit):
@@ -78,7 +78,7 @@ class sessions(commands.Cog):
                         await find_session_user(limit*2)
 
                     await (message.guild.get_member(await find_session_user(50))).remove_roles(channel.guild.get_role(servers[str(message.guild.id)]["in_session_role"]))
-                    await channel.edit(category=dormant_category)
+                    await channel.edit(category=dormant_category, sync_permissions=True)
                     await channel.send(embed=embed)
         except:
             raise
