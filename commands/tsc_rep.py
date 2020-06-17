@@ -96,27 +96,22 @@ class rep_cmd(commands.Cog):
         try:
             with open("servers.json") as f:
                 servers = json.load(f)
+            async def print_rep():
+                quote = QUOTES[random.randint(0, len(QUOTES)-1)]
+                rep_data = servers[str(ctx.guild.id)]["reputation"][str(member.id)]
+                embed=discord.Embed(title=f"{member}'s profile", description=f"{quote}")
+                embed.add_field(name="Reputation", value=f"{rep_data['upvotes']-rep_data['downvotes']} (+{rep_data['upvotes']}/-{rep_data['downvotes']})", inline=False)
+
+                await ctx.send(embed=embed)
 
             try:
-                quote = QUOTES[random.randint(0, len(QUOTES)-1)]
-                rep_data = servers[str(ctx.guild.id)]["reputation"][str(member.id)]
-                embed=discord.Embed(title=f"{member}'s profile", description=f"{quote}")
-                embed.add_field(name="Reputation", value=f"{rep_data['upvotes']-rep_data['downvotes']} (+{rep_data['upvotes']}/-{rep_data['downvotes']})", inline=False)
-
-                await ctx.send(embed=embed)
+                await print_rep()
             except KeyError:
                 servers[str(ctx.guild.id)]["reputation"][str(member.id)] = template
-
-                quote = QUOTES[random.randint(0, len(QUOTES)-1)]
-                rep_data = servers[str(ctx.guild.id)]["reputation"][str(member.id)]
-                embed=discord.Embed(title=f"{member}'s profile", description=f"{quote}")
-                embed.add_field(name="Reputation", value=f"{rep_data['upvotes']-rep_data['downvotes']} (+{rep_data['upvotes']}/-{rep_data['downvotes']})", inline=False)
-
-                await ctx.send(embed=embed)
+                await print_rep()
             with open("servers.json", "w") as json_file:
                 json.dump(servers, json_file)
         except:
-            raise
             await ctx.send(INVALID_DATABASE_ERROR)
 
 def setup(bot):

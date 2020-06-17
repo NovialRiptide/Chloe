@@ -12,7 +12,7 @@ class purge_cmd(commands.Cog):
         if ctx.message.author.id in MEMBERS_WITH_PERMS:
             channel = ctx.message.channel
             await channel.purge(limit=number+1)
-            await channel.send(embed=embed)
+            await channel.send(f"Purged!")
         else:
             channel = ctx.message.channel
             await channel.send(f"You do not have permission to do that, {ctx.message.author}...")

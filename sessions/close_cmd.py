@@ -2,6 +2,7 @@ import discord
 import json
 from discord.ext import commands
 from vars import *
+from library import *
 
 class sessions(commands.Cog):
     def __init__(self, client):
@@ -29,16 +30,8 @@ class sessions(commands.Cog):
                         title=f"This channel has been marked as dormant",
                         description=f"If you're a staff member and you have permission to speak in this channel, do not do it! It will break the bot!"
                     )
-                    async def find_session_user(limit):
-                        async for message in channel.history(limit=limit):
-                            if message.author == self.client.user:
-                                try:
-                                    return int(message.embeds[0].footer.text)
-                                except IndexError:
-                                    pass
-                        await find_session_user(limit*2)
 
-                    member = ctx.guild.get_member(await find_session_user(50))
+                    member = ctx.guild.get_member(await find_session_user(self.client, channel, 50))
                     await member.remove_roles(channel.guild.get_role(servers[str(ctx.guild.id)]["in_session_role"]))
                     await channel.edit(category=dormant_category, sync_permissions=True)
                     await channel.send(embed=embed)

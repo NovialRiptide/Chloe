@@ -8,6 +8,7 @@ class sessions(commands.Cog):
         self.client = client
 
     @commands.command()
+    @commands.has_guild_permissions(administrator=True)
     async def debug(self, ctx):
         try:
             with open("servers.json") as f:

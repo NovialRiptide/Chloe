@@ -3,6 +3,7 @@ import json
 import asyncio
 from discord.ext import commands
 from vars import *
+from library import *
 
 class sessions(commands.Cog):
     def __init__(self, client):
@@ -34,9 +35,11 @@ class sessions(commands.Cog):
                     description=tsc_ongoing_session(message.author.mention)
                 )
                 embed.set_footer(text=f"{message.author.id}")
+
                 await channel.edit(category=occupied_category, sync_permissions=True)
                 await channel_history[1].edit(embed=embed)
                 await message.author.add_roles(channel.guild.get_role(servers[str(message.guild.id)]["in_session_role"]))
+
                 if len(available_category.channels) <= MAX_NUMBER_OF_AVAILABLE_SESSIONS:
                     embed=discord.Embed(
                         title=f"Session available",
@@ -46,6 +49,7 @@ class sessions(commands.Cog):
                     channel_history = await channel.history(limit=1).flatten()
                     await channel.edit(category=available_category, sync_permissions=True)
                     await channel_history[0].edit(embed=embed)
+
             elif is_a_session_channel and message.guild.get_role(server["in_session_role"]) in message.author.roles:
                 await message.delete()
                     
@@ -60,6 +64,7 @@ class sessions(commands.Cog):
             occupied_category = discord.utils.get(self.client.get_all_channels(), id=occupied_category_id)
             dormant_category_id = server["session_categories"]["dormant"]
             dormant_category = discord.utils.get(self.client.get_all_channels(), id=dormant_category_id)
+            
             if is_a_session_channel and channel.category_id == occupied_category_id and channel_history[0].author.id != self.client.user.id:
                 def check(ms):
                     return ms.channel.id in occupied_category.channels
@@ -70,16 +75,8 @@ class sessions(commands.Cog):
                         title=f"This channel has been marked as dormant",
                         description=f"If you're a staff member and you have permission to speak in this channel, do not do it! It will break the bot!"
                     )
-                    async def find_session_user(limit):
-                        async for message in channel.history(limit=limit):
-                            if message.author == self.client.user:
-                                try:
-                                    return int(message.embeds[0].footer.text)
-                                except IndexError:
-                                    pass
-                        await find_session_user(limit*2)
 
-                    await (message.guild.get_member(await find_session_user(50))).remove_roles(channel.guild.get_role(servers[str(message.guild.id)]["in_session_role"]))
+                    await (message.guild.get_member(await find_session_user(self.client, channel, 50))).remove_roles(channel.guild.get_role(servers[str(message.guild.id)]["in_session_role"]))
                     await channel.edit(category=dormant_category, sync_permissions=True)
                     await channel.send(embed=embed)
         except:
