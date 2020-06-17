@@ -7,7 +7,7 @@ class on_ready_event(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        await self.client.change_presence(activity=discord.Game(name="prefix: !"))
+        await self.client.change_presence(activity=discord.Game(name="The Study Corner Bot"))
         print(f"Logged on as {self.client.user}!")
 
 def setup(client):

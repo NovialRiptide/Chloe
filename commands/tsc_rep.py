@@ -107,7 +107,12 @@ class rep_cmd(commands.Cog):
             except KeyError:
                 servers[str(ctx.guild.id)]["reputation"][str(member.id)] = template
 
-                await ctx.send(servers[str(ctx.guild.id)]["reputation"][str(member.id)])
+                quote = QUOTES[random.randint(0, len(QUOTES)-1)]
+                rep_data = servers[str(ctx.guild.id)]["reputation"][str(member.id)]
+                embed=discord.Embed(title=f"{member}'s profile", description=f"{quote}")
+                embed.add_field(name="Reputation", value=f"{rep_data['upvotes']-rep_data['downvotes']} (+{rep_data['upvotes']}/-{rep_data['downvotes']})", inline=False)
+
+                await ctx.send(embed=embed)
             with open("servers.json", "w") as json_file:
                 json.dump(servers, json_file)
         except:

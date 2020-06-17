@@ -8,6 +8,7 @@ class setup_cmd(commands.Cog):
         self.client = client
 
     @commands.command()
+    @commands.has_guild_permissions(administrator=True)
     async def setup(self, ctx):
         channel = ctx.message.channel
         template = {
@@ -20,12 +21,12 @@ class setup_cmd(commands.Cog):
         }
         with open("servers.json") as f:
             servers = json.load(f)
-        try:
+        if str(ctx.guild.id) not in servers:
             with open("servers.json", "w") as json_file:
                 json.dump(template, json_file)
 
             await channel.send("This server has been added to the Chloë database!")
-        except KeyError:
+        else:
             await channel.send("This server is already added to the Chloë database...")
 
 def setup(bot):

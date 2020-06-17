@@ -37,7 +37,6 @@ class event_handler(commands.Cog):
                     if channel_history[0].author.id != self.client.user.id:
                         await channel.send(embed=embed)
         except:
-            raise
             pass
 
 def setup(client):

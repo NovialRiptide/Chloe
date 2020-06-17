@@ -8,6 +8,7 @@ class say_cmd(commands.Cog):
         self.client = client
 
     @commands.command()
+    @commands.has_guild_permissions(manage_messages=True)
     async def say(self, ctx, *, message: str):
         await ctx.send(message)
 

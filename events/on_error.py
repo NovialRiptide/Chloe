@@ -19,8 +19,8 @@ class on_command_error_event(commands.Cog):
             await ctx.send(NO_PERMISSION_ERROR)
         elif isinstance(error, commands.BotMissingPermissions):
             await ctx.send(BOT_NO_PERMISSION_ERROR)
-        elif isinstance(error, commands.CommandNotFound):
-            await ctx.send(UNKNOWN_COMMAND_ERROR)
+        #elif isinstance(error, commands.CommandNotFound):
+        #    await ctx.send(UNKNOWN_COMMAND_ERROR)
         else:
             print(error)
 

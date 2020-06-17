@@ -3,9 +3,9 @@ import logging
 import traceback
 from discord.ext import commands
 
-TOKEN = "NzE2Nzk2MDYyOTUzNjM1OTQx.XuGszw.1MCUZVqqmlOjS1nYYuPa7nJ5fnI"
+TOKEN = "NzEzODIwNjg4Njg2Nzc2Mzgw.Xuj7NA.FeNNDkkcxCg3UjMPnLB5p1df5DM"
 
-client = commands.Bot(command_prefix="!")
+client = commands.Bot(command_prefix=";")
 
 logging.basicConfig(level="INFO")
 logger = logging.getLogger("main.py")
@@ -28,7 +28,7 @@ extensions = [
     #"commands.kick",
     "commands.ping",
     "commands.say",
-    #"commands.purge",
+    "commands.purge",
     "commands.setup",
     "commands.tsc_rep",
     #"commands.unban",

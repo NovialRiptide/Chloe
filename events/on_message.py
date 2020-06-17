@@ -10,27 +10,25 @@ class sessions(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        message_split = message.content.split(" ")
-        channel = message.channel
-        for word in BLACKLISTED_WORDS:
-            if word in message_split:
-                await channel.send("That's not nice..")
+        if message.guild.get_member(695502565668028468) in message.mentions:
+            await message.add_reaction(self.client.get_emoji(644393169873534977))
         
         try:
             with open("servers.json") as f:
                 servers = json.load(f)
             channel = message.channel
-            is_a_session_channel = channel.id in servers[str(channel.guild.id)]["channels"]["sessions"]
+            server = servers[str(channel.guild.id)]
+            is_a_session_channel = channel.id in server["channels"]["sessions"]
             channel_history = await channel.history(limit=2).flatten()
 
-            available_category_id = servers[str(channel.guild.id)]["session_categories"]["available"]
+            available_category_id = server["session_categories"]["available"]
             available_category = discord.utils.get(self.client.get_all_channels(), id=available_category_id)
-            occupied_category_id = servers[str(channel.guild.id)]["session_categories"]["occupied"]
+            occupied_category_id = server["session_categories"]["occupied"]
             occupied_category = discord.utils.get(self.client.get_all_channels(), id=occupied_category_id)
-            dormant_category_id = servers[str(channel.guild.id)]["session_categories"]["dormant"]
+            dormant_category_id = server["session_categories"]["dormant"]
             dormant_category = discord.utils.get(self.client.get_all_channels(), id=dormant_category_id)
 
-            if is_a_session_channel and channel.category_id == available_category_id and channel_history[0].author.id != self.client.user.id:
+            if is_a_session_channel and channel.category_id == available_category_id and channel_history[0].author.id != self.client.user.id and message.guild.get_role(server["in_session_role"]) not in message.author.roles:
                 embed=discord.Embed(
                     title=f"Channel is now in session...",
                     description=tsc_ongoing_session(message.author.mention)
@@ -48,21 +46,25 @@ class sessions(commands.Cog):
                     channel_history = await channel.history(limit=1).flatten()
                     await channel.edit(category=available_category, sync_permissions=True)
                     await channel_history[0].edit(embed=embed)
+            elif is_a_session_channel and message.guild.get_role(server["in_session_role"]) in message.author.roles:
+                await message.delete()
                     
+            # UPDATING THE VARIABLES BECAUSE THE CATEGORY OF THE CHANNEL HAS CHANGEDs AT THIS POINT IN TIME
             channel = message.channel
-            is_a_session_channel = channel.id in servers[str(channel.guild.id)]["channels"]["sessions"]
+            is_a_session_channel = channel.id in server["channels"]["sessions"]
             channel_history = await channel.history(limit=2).flatten()
 
-            available_category_id = servers[str(channel.guild.id)]["session_categories"]["available"]
+            available_category_id = server["session_categories"]["available"]
             available_category = discord.utils.get(self.client.get_all_channels(), id=available_category_id)
-            occupied_category_id = servers[str(channel.guild.id)]["session_categories"]["occupied"]
+            occupied_category_id = server["session_categories"]["occupied"]
             occupied_category = discord.utils.get(self.client.get_all_channels(), id=occupied_category_id)
-            dormant_category_id = servers[str(channel.guild.id)]["session_categories"]["dormant"]
+            dormant_category_id = server["session_categories"]["dormant"]
             dormant_category = discord.utils.get(self.client.get_all_channels(), id=dormant_category_id)
             if is_a_session_channel and channel.category_id == occupied_category_id and channel_history[0].author.id != self.client.user.id:
-                check = message.channel.id in occupied_category.channels
+                def check(ms):
+                    return ms.channel.id in occupied_category.channels
                 try:
-                    await self.client.wait_for("message", check=check, timeout=60*30)
+                    msg = await self.client.wait_for("message", check=check, timeout=60*30)
                 except asyncio.TimeoutError:
                     embed=discord.Embed(
                         title=f"This channel has been marked as dormant",
