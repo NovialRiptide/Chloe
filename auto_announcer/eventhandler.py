@@ -34,9 +34,10 @@ class event_handler(commands.Cog):
                         title=msg_data["title"],
                         description=msg_data["desc"]
                     )
-                    if channel_history[0].author.id != self.client.user.id:
+                    if channel_history[0].author.id != self.client.user.id and servers[str(channel.guild.id)]["auto_announcer"]:
                         await channel.send(embed=embed)
         except:
+            raise
             pass
 
 def setup(client):

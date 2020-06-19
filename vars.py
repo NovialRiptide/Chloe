@@ -73,5 +73,14 @@ QUOTES = [
     "It doesn\'t matter if she\'s imaginary, the thiccness exists in our hearts."
 ]
 
+PING_REE = [
+    695502565668028468, # professional
+    389932655111831562, # shauna 
+    287159796988248064, # lush
+    691604047064596480, # brooke
+    583667262460919818, # lsd
+    199586464256884737  # joren
+]
+
 def tsc_ongoing_session(user):
     return f"__**How to ask for help:**__\n:question: | Post your question! *Don't just say \"help\".*\n:eye: | Add any images, sources, or texts that will help the tutors.\n:school_satchel: | Inform the tutor of what level the question is. *(e.g. trigonometry, calculus BC, stoichiometry)*\n\n**Once the above is complete, ping the respective tutor role once!**\n\n{user}"

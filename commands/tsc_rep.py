@@ -39,19 +39,20 @@ class rep_cmd(commands.Cog):
             with open("servers.json") as f:
                 servers = json.load(f)
                 
+            async def upvote():
+                servers[str(ctx.guild.id)]["reputation"][str(member.id)]["upvotes"] += 1
+                servers[str(ctx.guild.id)]["reputation"][str(member.id)]["members_already_voted"].append(ctx.author.id)
+
             if ctx.author.id != member.id:
                 try:
                     if ctx.author.id in servers[str(ctx.guild.id)]["reputation"][str(member.id)]["members_already_voted"]:
                         await ctx.send(f"You have already affected {member.name}'s reputation!")
                     else:
-                        servers[str(ctx.guild.id)]["reputation"][str(member.id)]["upvotes"] += 1
-                        servers[str(ctx.guild.id)]["reputation"][str(member.id)]["members_already_voted"].append(ctx.author.id)
+                        await upvote()
                         await ctx.send(f"You have upvoted {member.name}!")
                 except KeyError:
                     servers[str(ctx.guild.id)]["reputation"][str(member.id)] = template
-                    servers[str(ctx.guild.id)]["reputation"][str(member.id)]["upvotes"] += 1
-                    servers[str(ctx.guild.id)]["reputation"][str(member.id)]["members_already_voted"].append(ctx.author.id)
-
+                    await upvote()
                     await ctx.send(f"You have upvoted {member.name}!")
             else:
                 await ctx.send("Now why would you do that..")
@@ -67,19 +68,21 @@ class rep_cmd(commands.Cog):
         try:
             with open("servers.json") as f:
                 servers = json.load(f)
+                
+            async def downvote():
+                servers[str(ctx.guild.id)]["reputation"][str(member.id)]["downvotes"] += 1
+                servers[str(ctx.guild.id)]["reputation"][str(member.id)]["members_already_voted"].append(ctx.author.id)
 
             if ctx.author.id != member.id:
                 try:
                     if ctx.author.id in servers[str(ctx.guild.id)]["reputation"][str(member.id)]["members_already_voted"]:
                         await ctx.send(f"You have already affected {member.name}'s reputation!")
                     else:
-                        servers[str(ctx.guild.id)]["reputation"][str(member.id)]["downvotes"] += 1
-                        servers[str(ctx.guild.id)]["reputation"][str(member.id)]["members_already_voted"].append(ctx.author.id)
+                        await downvote()
                         await ctx.send(f"You have downvoted {member.name}!")
                 except KeyError:
                     servers[str(ctx.guild.id)]["reputation"][str(member.id)] = template
-                    servers[str(ctx.guild.id)]["reputation"][str(member.id)]["downvotes"] += 1
-                    servers[str(ctx.guild.id)]["reputation"][str(member.id)]["members_already_voted"].append(ctx.author.id)
+                    await downvote()
 
                 await ctx.send(f"You have downvoted {member.name}!")
             else:
