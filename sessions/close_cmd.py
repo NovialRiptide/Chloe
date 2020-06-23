@@ -16,7 +16,7 @@ class sessions(commands.Cog):
                 servers = json.load(f)
             server = servers[str(channel.guild.id)]
             role = server["session_helper_role"]
-            if ctx.guild.get_role(role) in ctx.author.roles:
+            if ctx.guild.get_role(role) in ctx.author.roles or int(channel.topic) == ctx.author.id:
                 is_a_session_channel = channel.id in server["channels"]["sessions"]
 
                 available_category_id = server["session_categories"]["available"]

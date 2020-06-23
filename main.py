@@ -20,10 +20,12 @@ extensions = [
     #"events.on_member_unban",
     #"events.on_message_delete",
     #"events.on_message_edit",
+    "events.on_reaction_add",
     "events.on_ready",
 
     #"commands.ban",
     "commands.channel_setup",
+    "commands.dontasktoask",
     "commands.join_msg",
     "commands.join_msg_dm",
     "commands.json_database",
@@ -43,7 +45,9 @@ extensions = [
     "events.on_message",
     "sessions.session_setup",
     "sessions.set_help_role_cmd",
-    "sessions.set_in_session_cmd"
+    "sessions.set_in_session_cmd",
+    "sessions.tutor_assign",
+    "sessions.tutor_unassign",
 ]
 
 for extension in extensions:

@@ -1,5 +1,5 @@
+import json
 import discord
-import time
 from discord.ext import commands
 from vars import *
 
@@ -8,9 +8,9 @@ class fun(commands.Cog):
         self.client = client
 
     @commands.command()
-    @commands.has_guild_permissions(manage_messages=True)
-    async def say(self, ctx, *, message: str):
-        await ctx.send(message)
+    @commands.has_guild_permissions()
+    async def dontasktoask(self, ctx):
+        await ctx.channel.send(f"{ctx.author.mention} wants you to read this: http://sol.gfxile.net/dontask.html")
 
 def setup(bot):
     bot.add_cog(fun(bot))

@@ -1,3 +1,5 @@
+import mysql.connector
+
 MEMBERS_WITH_PERMS = [182288858782629888, 389932655111831562]
 
 VALID_CHANNEL_JSON_KEYS = {
@@ -82,5 +84,25 @@ PING_REE = [
     199586464256884737  # joren
 ]
 
+MAIN_TUTOR_ROLE = 630183885623525424
+TUTOR_ROLES = {
+    "MATH": 724158494072111175,
+    "SCIENCE": 724158499524968488,
+    "HISTORY": 724159960627281931,
+    "ENGLISH": 724158482286379092
+}
+
 def tsc_ongoing_session(user):
     return f"__**How to ask for help:**__\n:question: | Post your question! *Don't just say \"help\".*\n:eye: | Add any images, sources, or texts that will help the tutors.\n:school_satchel: | Inform the tutor of what level the question is. *(e.g. trigonometry, calculus BC, stoichiometry)*\n\n**Once the above is complete, ping the respective tutor role once!**\n\n{user}"
+
+MYSQL_HOST = "ec2-18-233-32-61.compute-1.amazonaws.com"
+MYSQL_USER = "rkaqpfzulzeuyc"
+MYSQL_PASS = "7746edab4fb7cb9e446684aa950e4c46e9d1bcb23c8a4845d5f6638cecfc792c"
+"""
+mydb = mysql.connector.connect(
+    host=MYSQL_HOST,
+    user=MYSQL_USER,
+    password=MYSQL_PASS
+)
+print(mydb)
+"""
