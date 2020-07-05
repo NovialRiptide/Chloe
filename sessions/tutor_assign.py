@@ -9,7 +9,6 @@ class sessions(commands.Cog):
         self.client = client
 
     @commands.command()
-    @commands.has_guild_permissions(administrator=True)
     async def assign(self, ctx, subject: str):
         if subject.upper() in TUTOR_ROLES.keys():
             if ctx.guild.get_role(MAIN_TUTOR_ROLE) not in ctx.author.roles:

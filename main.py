@@ -12,15 +12,7 @@ logger = logging.getLogger("main.py")
 
 extensions = [
     "events.on_error",
-    #"events.on_invite_create",
-    #"events.on_invite_delete",
-    #"events.on_member_ban",
     "events.on_member_join",
-    #"events.on_member_remove",
-    #"events.on_member_unban",
-    #"events.on_message_delete",
-    #"events.on_message_edit",
-    "events.on_reaction_add",
     "events.on_ready",
 
     #"commands.ban",
