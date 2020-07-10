@@ -27,15 +27,10 @@ class sessions(commands.Cog):
                 dormant_category = discord.utils.get(self.client.get_all_channels(), id=dormant_category_id)
 
                 if is_a_session_channel and channel.category_id == occupied_category_id:
-                    embed=discord.Embed(
-                        title=f"This channel has been marked as dormant",
-                        description=f"If you're a staff member and you have permission to speak in this channel, do not do it! It will break the bot!"
-                    )
-
                     member = ctx.guild.get_member(int(channel.topic))
                     await member.remove_roles(channel.guild.get_role(servers[str(ctx.guild.id)]["in_session_role"]))
                     await channel.edit(category=dormant_category, sync_permissions=True, topic="")
-                    await channel.send(embed=embed)
+                    await channel.send("**This channel has been marked as dormant.**\nPlease do not speak in this if you have permission to speak.")
             else:
                 await channel.send(f"You do not have permission to do that, only someone with the ``{ctx.guild.get_role(role)}`` role can.")
         except:
