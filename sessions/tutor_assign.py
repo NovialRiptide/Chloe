@@ -10,7 +10,7 @@ class sessions(commands.Cog):
 
     @commands.command()
     async def assign(self, ctx, subject: str):
-        if subject.upper() in TUTOR_ROLES.keys():
+        if subject.upper() in TUTOR_ROLES.keys() and ctx.author.id not in BLACKLISTED_TUTORS:
             if ctx.guild.get_role(MAIN_TUTOR_ROLE) not in ctx.author.roles:
                 await ctx.author.add_roles(ctx.guild.get_role(MAIN_TUTOR_ROLE))
             await ctx.author.add_roles(ctx.guild.get_role(TUTOR_ROLES[subject.upper()]))
