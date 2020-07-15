@@ -1,8 +1,6 @@
 import discord
-import json
 from discord.ext import commands
 from vars import *
-from library import *
 
 class sessions(commands.Cog):
     def __init__(self, client):
@@ -12,25 +10,18 @@ class sessions(commands.Cog):
     async def close(self, ctx):
         try:
             channel = ctx.channel
-            with open("servers.json") as f:
-                servers = json.load(f)
-            server = servers[str(channel.guild.id)]
-            role = server["session_helper_role"]
+            role = MAIN_TUTOR_ROLE
             if ctx.guild.get_role(role) in ctx.author.roles or int(channel.topic) == ctx.author.id:
-                is_a_session_channel = channel.id in server["channels"]["sessions"]
+                is_a_session_channel = channel.id in SESSION_CHANNELS
+                available_category = discord.utils.get(self.client.get_all_channels(), id=AVAILABLE_CATEGORY_ID)
+                occupied_category = discord.utils.get(self.client.get_all_channels(), id=OCCUPIED_CATEGORY_ID)
+                dormant_category = discord.utils.get(self.client.get_all_channels(), id=DORMANT_CATEGORY_ID)
 
-                available_category_id = server["session_categories"]["available"]
-                available_category = discord.utils.get(self.client.get_all_channels(), id=available_category_id)
-                occupied_category_id = server["session_categories"]["occupied"]
-                occupied_category = discord.utils.get(self.client.get_all_channels(), id=occupied_category_id)
-                dormant_category_id = server["session_categories"]["dormant"]
-                dormant_category = discord.utils.get(self.client.get_all_channels(), id=dormant_category_id)
-
-                if is_a_session_channel and channel.category_id == occupied_category_id:
+                if is_a_session_channel and channel.category_id == OCCUPIED_CATEGORY_ID:
                     member = ctx.guild.get_member(int(channel.topic))
-                    await member.remove_roles(channel.guild.get_role(servers[str(ctx.guild.id)]["in_session_role"]))
+                    await member.remove_roles(channel.guild.get_role(IN_SESSION_ROLE))
                     await channel.edit(category=dormant_category, sync_permissions=True, topic="")
-                    await channel.send("**This channel has been marked as dormant.**\nPlease do not speak in this if you have permission to speak.")
+                    await channel.send("**This channel has been marked as dormant.**\nThis channel is not meant to be in use.")
             else:
                 await channel.send(f"You do not have permission to do that, only someone with the ``{ctx.guild.get_role(role)}`` role can.")
         except:

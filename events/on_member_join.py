@@ -1,6 +1,5 @@
 import discord
 import random
-import json
 import asyncio
 from discord.ext import commands
 from vars import *
@@ -19,21 +18,13 @@ class on_member_join_event(commands.Cog):
             
             await member.add_roles(role)
             
-            with open("servers.json") as f:
-                servers = json.load(f)
-            server = servers[str(member.guild.id)]
-            channel = self.client.get_channel(server["channels"]["join_leave"])
-            try:
-                if server["join_msg"] != "":
-                    join_msg = server["join_msg"]
-                    join_msg = join_msg.replace("{mention}", member.mention)
-                    await channel.send(join_msg)
-            except: pass
+            channel = self.client.get_channel(JOIN_MSG_CHANNEL)
+
+            join_msg = PUBLIC_WELCOMER_MSG
+            join_msg = join_msg.replace("{mention}", member.mention)
+            await channel.send(join_msg)
             
-            try:
-                if server["join_msg_dm"] != "":
-                    await member.send(server["join_msg_dm"])
-            except: pass
+            await member.send(PRIVATE_WELCOMER_MSG)
         except: pass
 
 def setup(client):

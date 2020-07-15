@@ -1,98 +1,32 @@
-import mysql.connector
+def combine_multiple_lines(lines):
+    value = ""
+    for line in lines:
+        value = value + line + "\n"
+    return value
 
-BLACKLISTED_TUTORS = [
-    670387737156780083
-]
-
-HOUSE_ROLES = [
-    652137993594732564,
-    652137995532763136,
-    652137999496380417,
-    652137997525057557
-]
-
-VALID_CHANNEL_JSON_KEYS = {
-    "logging": "int",
-    "sessions": "list",
-    "join_leave": "int",
-    "auto_announce": "int"
-}
-
-VALID_SESSION_CATEGORIES = [
-    "dormant",
-    "available",
-    "occupied"
-]
-
-BLACKLISTED_WORDS = [
-    "nigger",
-    "nigga",
-    "nibba",
-    "niga",
-    "redskin",
-    "red skin"
-]
-
-POSITIVE_WORDS = [
-
-]
-
-NEGATIVE_WORDS = [
-    "stupid"
-]
-
-PHRASES = [
-    ["ur", "gay"],
-    ["chloe", "is", NEGATIVE_WORDS]
-]
-
+# SESSIONS SHIT
 MAX_NUMBER_OF_AVAILABLE_SESSIONS = 2
 
-FOOTER = "Bot Developed by Novial // Andrew Hong"
+AVAILABLE_CATEGORY_ID = 667256540864053269
+OCCUPIED_CATEGORY_ID = 630899948841336842
+DORMANT_CATEGORY_ID = 722493688688934972
 
-INVALID_DATABASE_ERROR = f"It seems like you are not in the Chloë database. Do ``!setup`` to continue."
-
-MISSING_ARGUMENTS_ERROR = "You are missing some arguments..."
-TOO_MANY_ARGUMENTS_ERROR = "You have too many arguments!"
-USER_INPUT_ERROR = "You have inputted your arguments wrong!"
-NO_PERMISSION_ERROR = "You do not have permission to do this..."
-BOT_NO_PERMISSION_ERROR = "I do not have permission to do this..."
-UNKNOWN_COMMAND_ERROR = "I have never heard of this command before."
-
-FAKE_ERROR = "An error has occurred. Please try again later."
-
-QUOTES = [
-    "Never gonna give you up, never gonna let you down.",
-    "May the Force be with you.",
-    "I\'ll be back.",
-    "It\'s alive! It\'s alive!",
-    "Houston, we have a problem.",
-    "I\'m king of the world!",
-    "There\'s no time to explain!",
-    "Please don't make the super suit green... or animated!",
-    "Just because something works, doesn\'t mean it can\'t be improved.",
-    "It\'s an imperfect world but it\'s the only one we got.",
-    "My precious.",
-    "E.T. phone home.",
-    "Just keep swimming.",
-    "Here\'s Johnny!",
-    "To infinity and beyond!",
-    "There\'s a snake in my boot!",
-    "Toto, I've a feeling we\'re not in Kansas anymore.",
-    "Choice is an illusion, play monopoly",
-    "Freeze! It's the anime police!",
-    "It doesn\'t matter if she\'s imaginary, the thiccness exists in our hearts."
+SESSION_CHANNELS = [
+    630209704894791691,
+    705712718681735218,
+    705712937645637643,
+    630209625966379023,
+    630209791255642112,
+    630209742106656779,
+    722512874735665185,
+    722512938619109407,
+    722512998933069884,
+    722513045967994902,
+    722513107905151076,
+    722513186590556260
 ]
 
-PING_REE = [
-    695502565668028468, # professional
-    389932655111831562, # shauna 
-    287159796988248064, # lush
-    691604047064596480, # brooke
-    583667262460919818, # lsd
-    199586464256884737  # joren
-]
-
+IN_SESSION_ROLE = 722498396220293150
 MAIN_TUTOR_ROLE = 630183885623525424
 TUTOR_ROLES = {
     "MATH": 724158494072111175,
@@ -104,14 +38,63 @@ TUTOR_ROLES = {
 def tsc_ongoing_session(user):
     return f"__**How to ask for help:**__\n:question: | Post your question! *Don't just say \"help\".*\n:eye: | Add any images, sources, or texts that will help the tutors.\n:school_satchel: | Inform the tutor of what level the question is. *(e.g. trigonometry, calculus BC, stoichiometry)*\n\n**Once the above is complete, ping the respective tutor role once!**\n\n{user}"
 
-MYSQL_HOST = "ec2-18-233-32-61.compute-1.amazonaws.com"
-MYSQL_USER = "rkaqpfzulzeuyc"
-MYSQL_PASS = "7746edab4fb7cb9e446684aa950e4c46e9d1bcb23c8a4845d5f6638cecfc792c"
-"""
-mydb = mysql.connector.connect(
-    host=MYSQL_HOST,
-    user=MYSQL_USER,
-    password=MYSQL_PASS
-)
-print(mydb)
-"""
+# AUTOJOIN SHIT
+HOUSE_ROLES = [
+    652137993594732564,
+    652137995532763136,
+    652137999496380417,
+    652137997525057557
+]
+JOIN_MSG_CHANNEL = 630206335085969418
+
+PUBLIC_WELCOMER_MSG = combine_multiple_lines([
+    "<:kirbywave:644521817851035652> || {mention} has joined **The Study Corner**.",
+    "<@&671220549283741708> please give {mention} a warm welcome!"
+])
+
+uni1 = u"\ud83d\udd17"
+uni2 = u"\ud83c\udf80\u30fb"
+uni3 = u"\u2b50\ufe0f\u30fb"
+uni4 = u"\ud83c\udf0c\u30fb"
+uni5 = u"\ud83d\udd30\u30fb"
+uni6 = u"\ud83e\udd0d\u30fb"
+PRIVATE_WELCOMER_MSG = combine_multiple_lines([
+    "**Hello & Welcome to __The Study Corner__**",
+    "__Some Basic Guidelines before Entering TSC:__",
+    f"> Members are not permitted to DM Staff, Tutors or Advisors. To access help use  `#{uni5}support`",
+    "> Use **only** the Study Channels provided to ask questions about subjects.",
+    "> Excessive swearing is prohibited.",
+    "> Doing anything that breaks **Discord TOS** is a bannable offence.",
+    "",
+    f"You can assign yourself roles at `#{uni2}profile`. Please also introduce yourself at `#{uni3}introductions`.",
+    "",
+    f"Before gaining access to any of our channels you must first use our verification system. In the channel `#{uni6}verify` you will be given the option of 4 houses. Choose one and you will be given access to the server. If there are any issues with this process please immediately DM <@!287159796988248064>.",
+    "",
+    "Here is a permanent invite to the server just in case you leave or you'd like to invite friends - https://discord.gg/AcFxSZP",
+    "Here is a permanent invite to the **Ban Appeals** server just in case you get banned and wish to appeal - https://discord.gg/ZzKBTwy",
+    "",
+    f"We are currently actively looking for Moderators, Tutors, Advisors, Developers and Partners. If you are interested in any of theses check out `#{uni4}server-information`. If you are interested in Partnering with us, DM Lush#0001 or anyone with the \"Growth & Promtion\" Role.",
+    "",
+    "**Lush's Other Server(s):**",
+    f"{uni1} - https://discord.gg/Yv6Y2bc",
+    f"{uni1} - https://gph.is/g/ZywQrrn"
+])
+
+# ERROR HANDLING MSGS SHIT
+MISSING_ARGUMENTS_ERROR = "You are missing some arguments..."
+TOO_MANY_ARGUMENTS_ERROR = "You have too many arguments!"
+USER_INPUT_ERROR = "You have inputted your arguments wrong!"
+NO_PERMISSION_ERROR = "You do not have permission to do this..."
+BOT_NO_PERMISSION_ERROR = "I do not have permission to do this..."
+UNKNOWN_COMMAND_ERROR = "I have never heard of this command before."
+FAKE_ERROR = "An error has occurred. Please try again later."
+
+# MIGHT REMOVE
+PING_REE = [
+    695502565668028468, # professional
+    389932655111831562, # shauna 
+    287159796988248064, # lush
+    691604047064596480, # brooke
+    583667262460919818, # lsd
+    199586464256884737  # joren
+]

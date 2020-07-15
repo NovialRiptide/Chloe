@@ -1,6 +1,4 @@
 import discord
-import json
-from mee6_py_api import API
 from discord.ext import commands
 from vars import *
 

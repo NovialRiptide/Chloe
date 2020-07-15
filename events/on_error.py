@@ -19,10 +19,11 @@ class on_command_error_event(commands.Cog):
             await ctx.send(NO_PERMISSION_ERROR)
         elif isinstance(error, commands.BotMissingPermissions):
             await ctx.send(BOT_NO_PERMISSION_ERROR)
-        #elif isinstance(error, commands.CommandNotFound):
-        #    await ctx.send(UNKNOWN_COMMAND_ERROR)
+        elif isinstance(error, commands.CommandNotFound): pass
+        elif isinstance(error, commands.CommandOnCooldown):
+            await ctx.send(error)
         else:
-            print(error)
+            await ctx.send(f"Send this to the developer.```{error}```")
 
 def setup(client):
     client.add_cog(on_command_error_event(client))

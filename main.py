@@ -13,31 +13,14 @@ logger = logging.getLogger("main.py")
 extensions = [
     "events.on_error",
     "events.on_member_join",
+    "events.on_message",
     "events.on_ready",
 
-    #"commands.ban",
-    "commands.channel_setup",
     "commands.dontasktoask",
-    "commands.join_msg",
-    "commands.join_msg_dm",
-    "commands.json_database",
-    #"commands.kick",
     "commands.ping",
     "commands.say",
-    #"commands.purge",
-    "commands.setup",
-    "commands.tsc_rep",
-    #"commands.unban",
-
-    "auto_announcer.eventhandler",
-    "auto_announcer.trigger",
 
     "sessions.close_cmd",
-    "sessions.debug_cmd",
-    "events.on_message",
-    "sessions.session_setup",
-    "sessions.set_help_role_cmd",
-    "sessions.set_in_session_cmd",
     "sessions.tutor_assign",
     "sessions.tutor_unassign",
 ]

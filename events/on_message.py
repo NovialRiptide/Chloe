@@ -1,9 +1,7 @@
 import discord
-import json
 import asyncio
 from discord.ext import commands
 from vars import *
-from library import *
 
 pending_tasks = {}
 
@@ -21,47 +19,39 @@ class sessions(commands.Cog):
                 except AttributeError: pass
             
             try:
-                with open("servers.json") as f:
-                    servers = json.load(f)
                 channel = message.channel
-                server = servers[str(channel.guild.id)]
-                is_a_session_channel = channel.id in server["channels"]["sessions"]
+                is_a_session_channel = channel.id in SESSION_CHANNELS
                 channel_history = await channel.history(limit=2).flatten()
 
-                available_category_id = server["session_categories"]["available"]
-                available_category = discord.utils.get(self.client.get_all_channels(), id=available_category_id)
-                occupied_category_id = server["session_categories"]["occupied"]
-                occupied_category = discord.utils.get(self.client.get_all_channels(), id=occupied_category_id)
-                dormant_category_id = server["session_categories"]["dormant"]
-                dormant_category = discord.utils.get(self.client.get_all_channels(), id=dormant_category_id)
+                available_category = discord.utils.get(self.client.get_all_channels(), id=AVAILABLE_CATEGORY_ID)
+                occupied_category = discord.utils.get(self.client.get_all_channels(), id=OCCUPIED_CATEGORY_ID)
+                dormant_category = discord.utils.get(self.client.get_all_channels(), id=DORMANT_CATEGORY_ID)
 
-                if is_a_session_channel and channel.category_id == available_category_id and channel_history[0].author.id != self.client.user.id and message.guild.get_role(server["in_session_role"]) not in message.author.roles:
+                if is_a_session_channel and channel.category_id == AVAILABLE_CATEGORY_ID and channel_history[0].author.id != self.client.user.id and message.guild.get_role(IN_SESSION_ROLE) not in message.author.roles:
                     await channel.edit(category=occupied_category, sync_permissions=True, topic=f"{message.author.id}")
                     await channel_history[1].edit(content=tsc_ongoing_session(message.author.mention))
-                    await message.author.add_roles(channel.guild.get_role(servers[str(message.guild.id)]["in_session_role"]))
+                    await message.author.add_roles(channel.guild.get_role(IN_SESSION_ROLE))
 
                     if len(available_category.channels) <= MAX_NUMBER_OF_AVAILABLE_SESSIONS:
-                        channel = dormant_category.channels[0]
+                        channel = dormant_category.channels[-1]
                         channel_history = await channel.history(limit=1).flatten()
                         await channel.edit(category=available_category, sync_permissions=True)
                         await channel_history[0].edit(content="Speak in this channel to start your tutor session!")
 
-                elif is_a_session_channel and channel.category_id == available_category_id and message.guild.get_role(server["in_session_role"]) in message.author.roles:
+                elif is_a_session_channel and channel.category_id == AVAILABLE_CATEGORY_ID and message.guild.get_role(IN_SESSION_ROLE) in message.author.roles:
                     await message.delete()
                 
-                # UPDATING THE VARIABLES BECAUSE THE CATEGORY OF THE CHANNEL HAS CHANGED AT THIS POINT IN TIME
+                # THIS IS SUPPOSE TO CHECK WHETHER A USER HAS SPOKEN IN AN ONGOING SESSION
+                # IF THEY DID, THE TASK THAT IS MEANT TO AUTOCLOSE THE CHANNEL WILL RESET
                 channel = message.channel
-                is_a_session_channel = channel.id in server["channels"]["sessions"]
+                is_a_session_channel = channel.id in SESSION_CHANNELS
                 channel_history = await channel.history(limit=2).flatten()
 
-                available_category_id = server["session_categories"]["available"]
-                available_category = discord.utils.get(self.client.get_all_channels(), id=available_category_id)
-                occupied_category_id = server["session_categories"]["occupied"]
-                occupied_category = discord.utils.get(self.client.get_all_channels(), id=occupied_category_id)
-                dormant_category_id = server["session_categories"]["dormant"]
-                dormant_category = discord.utils.get(self.client.get_all_channels(), id=dormant_category_id)
+                available_category = discord.utils.get(self.client.get_all_channels(), id=AVAILABLE_CATEGORY_ID)
+                occupied_category = discord.utils.get(self.client.get_all_channels(), id=OCCUPIED_CATEGORY_ID)
+                dormant_category = discord.utils.get(self.client.get_all_channels(), id=DORMANT_CATEGORY_ID)
 
-                if is_a_session_channel and channel.category_id == occupied_category_id and channel_history[0].author.id != self.client.user.id:
+                if is_a_session_channel and channel.category_id == OCCUPIED_CATEGORY_ID and channel_history[0].author.id != self.client.user.id:
                     def check(ms):
                         return ms.channel.id in occupied_category.channels
                     try:
@@ -73,10 +63,10 @@ class sessions(commands.Cog):
                         channel_history = await channel.history(limit=1).flatten()
 
                         member = message.guild.get_member(int(channel.topic))
-                        await (member).remove_roles(channel.guild.get_role(servers[str(message.guild.id)]["in_session_role"]))
+                        await (member).remove_roles(channel.guild.get_role(IN_SESSION_ROLE))
                         await channel.edit(category=dormant_category, sync_permissions=True, topic="")
                         await channel.send("**This channel has been marked as dormant.**\nPlease do not speak in this if you have permission to speak.")
-                        #await member.send("Your session has expired in **The Study Corner**")
+                        await member.send("Your session has expired in **The Study Corner**")
             except:
                 raise
                 pass
