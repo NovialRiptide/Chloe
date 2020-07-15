@@ -14,7 +14,7 @@ class sessions(commands.Cog):
             await ctx.author.add_roles(ctx.guild.get_role(TUTOR_ROLES[subject.upper()]))
             await ctx.send(f"You became a {subject} tutor!")
         else:
-            await ctx.send(f"That's an invalid tutor role\nHere are the avaliable roles: ``{", ".join(TUTOR_ROLES.keys())}``")
+            await ctx.send(f"That's an invalid tutor role\nHere are the avaliable roles: ``{', '.join(TUTOR_ROLES.keys())}``")
 
 def setup(bot):
     bot.add_cog(sessions(bot))
