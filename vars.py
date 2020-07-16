@@ -53,6 +53,12 @@ PUBLIC_WELCOMER_MSG = combine_multiple_lines([
     "<@&671220549283741708> please give {mention} a warm welcome!"
 ])
 
+MUST_ADD_ROLES = [
+    674245729480605716,
+    631013102325858305,
+    630185034753638429
+]
+
 uni1 = u"\ud83d\udd17"
 uni2 = u"\ud83c\udf80\u30fb"
 uni3 = u"\u2b50\ufe0f\u30fb"
@@ -62,19 +68,17 @@ uni6 = u"\ud83e\udd0d\u30fb"
 PRIVATE_WELCOMER_MSG = combine_multiple_lines([
     "**Hello & Welcome to __The Study Corner__**",
     "__Some Basic Guidelines before Entering TSC:__",
-    f"> Members are not permitted to DM Staff, Tutors or Advisors. To access help use  `#{uni5}support`",
+    f"> Members are not permitted to DM Staff, unless they are friends. To access help, DM the support bot.",
     "> Use **only** the Study Channels provided to ask questions about subjects.",
     "> Excessive swearing is prohibited.",
     "> Doing anything that breaks **Discord TOS** is a bannable offence.",
     "",
     f"You can assign yourself roles at `#{uni2}profile`. Please also introduce yourself at `#{uni3}introductions`.",
     "",
-    f"Before gaining access to any of our channels you must first use our verification system. In the channel `#{uni6}verify` you will be given the option of 4 houses. Choose one and you will be given access to the server. If there are any issues with this process please immediately DM <@!287159796988248064>.",
-    "",
     "Here is a permanent invite to the server just in case you leave or you'd like to invite friends - https://discord.gg/AcFxSZP",
     "Here is a permanent invite to the **Ban Appeals** server just in case you get banned and wish to appeal - https://discord.gg/ZzKBTwy",
     "",
-    f"We are currently actively looking for Moderators, Tutors, Advisors, Developers and Partners. If you are interested in any of theses check out `#{uni4}server-information`. If you are interested in Partnering with us, DM Lush#0001 or anyone with the \"Growth & Promtion\" Role.",
+    f"We are currently actively looking for Moderators, Developers and Partners. If you are interested in any of theses check out `#{uni4}server-information`. If you are interested in Partnering with us, DM Lush#0001 or anyone with the \"Growth & Promtion\" Role.",
     "",
     "**Lush's Other Server(s):**",
     f"{uni1} - https://discord.gg/Yv6Y2bc",
@@ -92,10 +96,5 @@ FAKE_ERROR = "An error has occurred. Please try again later."
 
 # MIGHT REMOVE
 PING_REE = [
-    695502565668028468, # professional
-    389932655111831562, # shauna 
-    287159796988248064, # lush
-    691604047064596480, # brooke
-    583667262460919818, # lsd
-    199586464256884737  # joren
+    
 ]
