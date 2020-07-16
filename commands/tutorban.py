@@ -8,7 +8,7 @@ class sessions(commands.Cog):
 
     @commands.command()
     @commands.has_guild_permissions(ban_members=True)
-    async def tutorban(self, ctx, member: discord.Member, *, reason):
+    async def tutorban(self, ctx, member: discord.Member, *, reason="No reason provided"):
         try:
             for role in TUTOR_ROLES:
                 await ctx.author.remove_roles(ctx.guild.get_role(role))
