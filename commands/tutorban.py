@@ -16,7 +16,7 @@ class sessions(commands.Cog):
         except: pass
 
         await member.send(f"{ctx.author} has restricted you from becoming a tutor.")
-        await ctx.send(f"Restricted {member.mention} from becoming a tutor for {reason}")
+        await ctx.send(f"Restricted {member.mention} from becoming a tutor for ``{reason}``")
 
 def setup(bot):
     bot.add_cog(sessions(bot))
