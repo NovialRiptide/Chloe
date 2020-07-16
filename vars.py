@@ -34,6 +34,7 @@ TUTOR_ROLES = {
     "SOCIALSTUDIES": 724159960627281931,
     "ENGLISH": 724158482286379092
 }
+BANNED_ASSIGN_TUTOR_ROLE = 703965433816023110
 
 def tsc_ongoing_session(user):
     return f"__**How to ask for help:**__\n:question: | Post your question! *Don't just say \"help\".*\n:eye: | Add any images, sources, or texts that will help the tutors.\n:school_satchel: | Inform the tutor of what level the question is. *(e.g. trigonometry, calculus BC, stoichiometry)*\n\n**Once the above is complete, ping the respective tutor role once!**\n\n{user}"
