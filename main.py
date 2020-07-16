@@ -19,6 +19,8 @@ extensions = [
     "commands.dontasktoask",
     "commands.ping",
     "commands.say",
+    "commands.tutorban",
+    "commands.tutorunban",
 
     "sessions.close_cmd",
     "sessions.tutor_assign",

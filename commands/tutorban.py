@@ -7,6 +7,7 @@ class sessions(commands.Cog):
         self.client = client
 
     @commands.command()
+    @commands.has_guild_permissions(ban_members=True)
     async def tutorban(self, ctx, member: discord.Member, *, reason):
         try:
             for role in TUTOR_ROLES:
