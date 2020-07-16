@@ -10,7 +10,7 @@ class sessions(commands.Cog):
     @commands.has_guild_permissions(ban_members=True)
     async def tutorunban(self, ctx, member: discord.Member, *, reason="No reason provided"):
         try:
-            await ctx.author.remove_roles(ctx.guild.get_role(BANNED_ASSIGN_TUTOR_ROLE))
+            await member.remove_roles(ctx.guild.get_role(BANNED_ASSIGN_TUTOR_ROLE))
         except: pass
 
         await member.send(f"{ctx.author} has unrestricted you from becoming a tutor.")
