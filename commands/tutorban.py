@@ -13,6 +13,7 @@ class sessions(commands.Cog):
             for role in TUTOR_ROLES:
                 await ctx.author.remove_roles(ctx.guild.get_role(role))
             await ctx.author.remove_roles(ctx.guild.get_role(MAIN_TUTOR_ROLE))
+            await ctx.author.add_roles(ctx.guild.get_role(BANNED_ASSIGN_TUTOR_ROLE))
         except: pass
 
         await member.send(f"{ctx.author} has restricted you from becoming a tutor.")
