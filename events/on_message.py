@@ -63,7 +63,8 @@ class sessions(commands.Cog):
                         channel_history = await channel.history(limit=1).flatten()
 
                         member = message.guild.get_member(int(channel.topic))
-                        await (member).remove_roles(channel.guild.get_role(IN_SESSION_ROLE))
+                        try: await (member).remove_roles(channel.guild.get_role(IN_SESSION_ROLE))
+                        except: pass
                         await channel.edit(category=dormant_category, sync_permissions=True, topic="")
                         await channel.send("**This channel has been marked as dormant.**\nPlease do not speak in this if you have permission to speak.")
                         await member.send("Your session has expired in **The Study Corner**")
