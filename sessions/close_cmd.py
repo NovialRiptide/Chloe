@@ -18,7 +18,8 @@ class sessions(commands.Cog):
 
                 if is_a_session_channel and channel.category_id == OCCUPIED_CATEGORY_ID:
                     member = ctx.guild.get_member(int(channel.topic))
-                    await member.remove_roles(channel.guild.get_role(IN_SESSION_ROLE))
+                    try: await member.remove_roles(channel.guild.get_role(IN_SESSION_ROLE))
+                    except: pass
                     await channel.edit(category=dormant_category, sync_permissions=True, topic="")
                     await channel.send("**This channel has been marked as dormant.**\nThis channel is not meant to be in use.")
             else:
