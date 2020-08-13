@@ -57,7 +57,7 @@ class sessions(commands.Cog):
                     try:
                         if channel in pending_tasks:
                             pending_tasks[channel].close()
-                        pending_tasks[channel] = self.client.wait_for("message", check=check, timeout=60*30)
+                        pending_tasks[channel] = self.client.wait_for("message", check=check, timeout=60*60)
                         msg = await pending_tasks[channel]
                     except asyncio.TimeoutError:
                         channel_history = await channel.history(limit=1).flatten()
@@ -66,7 +66,7 @@ class sessions(commands.Cog):
                         try: await (member).remove_roles(channel.guild.get_role(IN_SESSION_ROLE))
                         except: pass
                         await channel.edit(category=dormant_category, sync_permissions=True, topic="")
-                        await channel.send("**This channel has been marked as dormant.**\nPlease do not speak in this if you have permission to speak.")
+                        await channel.send("**This channel has expired, so it has been marked as dormant.**\nPlease do not speak in this if you have permission to speak. If you think you can solve the user\'s issue, please DM them.")
                         await member.send("Your session has expired in **The Study Corner**")
             except:
                 raise
