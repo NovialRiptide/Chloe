@@ -12,11 +12,7 @@ class on_member_join_event(commands.Cog):
     async def on_member_join(self, member):
         await asyncio.sleep(5)
         try:
-            random_role = random.randint(0,len(HOUSE_ROLES)-1)
             guild = member.guild
-            role = guild.get_role(HOUSE_ROLES[random_role])
-            
-            await member.add_roles(role)
             
             channel = self.client.get_channel(JOIN_MSG_CHANNEL)
 
