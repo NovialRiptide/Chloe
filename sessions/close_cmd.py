@@ -23,7 +23,7 @@ class sessions(commands.Cog):
                     await channel.edit(category=dormant_category, sync_permissions=True, topic="")
                     await channel.send("**This channel has been marked as dormant.**\nThis channel is not meant to be in use.")
             else:
-                await channel.send(f"You do not have permission to do that, only someone with the ``{ctx.guild.get_role(MAIN_TUTOR_ROLE)}`` role can.")
+                await channel.send(f"You do not have permission to do that, only someone with the ``{ctx.guild.get_role(630180904920285194)}`` role can.")
         except:
             raise
             pass
