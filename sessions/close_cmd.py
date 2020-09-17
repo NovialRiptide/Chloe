@@ -10,7 +10,8 @@ class sessions(commands.Cog):
     async def close(self, ctx):
         try:
             channel = ctx.channel
-            if int(channel.topic) == ctx.author.id or ctx.guild.get_role(630180904920285194) in ctx.author.roles:
+            server_management_role = ctx.guild.get_role(630180904920285194)
+            if int(channel.topic) == ctx.author.id or server_management_role in ctx.author.roles:
                 is_a_session_channel = channel.id in SESSION_CHANNELS
                 available_category = discord.utils.get(self.client.get_all_channels(), id=AVAILABLE_CATEGORY_ID)
                 occupied_category = discord.utils.get(self.client.get_all_channels(), id=OCCUPIED_CATEGORY_ID)
@@ -23,7 +24,7 @@ class sessions(commands.Cog):
                     await channel.edit(category=dormant_category, sync_permissions=True, topic="")
                     await channel.send("**This channel has been marked as dormant.**\nThis channel is not meant to be in use.")
             else:
-                await channel.send(f"You do not have permission to do that, only someone with the ``{ctx.guild.get_role(630180904920285194)}`` role can.")
+                await channel.send(f"You do not have permission to do that, only someone with the ``{server_management_role}`` role can.")
         except:
             raise
             pass
