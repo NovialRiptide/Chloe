@@ -10,7 +10,7 @@ class sessions(commands.Cog):
     async def close(self, ctx):
         try:
             channel = ctx.channel
-            if int(channel.topic) == ctx.author.id && ctx.guild.get_role(630180904920285194) in ctx.author.roles:
+            if int(channel.topic) == ctx.author.id and ctx.guild.get_role(630180904920285194) in ctx.author.roles:
                 is_a_session_channel = channel.id in SESSION_CHANNELS
                 available_category = discord.utils.get(self.client.get_all_channels(), id=AVAILABLE_CATEGORY_ID)
                 occupied_category = discord.utils.get(self.client.get_all_channels(), id=OCCUPIED_CATEGORY_ID)
