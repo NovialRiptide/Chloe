@@ -3,7 +3,7 @@ import time
 from discord.ext import commands
 from vars import *
 
-class ping_cmd(commands.Cog):
+class miscellaneous(commands.Cog):
     def __init__(self, client):
         self.client = client
 
@@ -16,4 +16,4 @@ class ping_cmd(commands.Cog):
         await message.edit(content=f"Ping! {time_taken * 1000:,.2f}ms")
 
 def setup(bot):
-    bot.add_cog(ping_cmd(bot))
+    bot.add_cog(miscellaneous(bot))

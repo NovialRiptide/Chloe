@@ -2,8 +2,7 @@ import discord
 import logging
 import traceback
 from discord.ext import commands
-
-TOKEN = "NzEzODIwNjg4Njg2Nzc2Mzgw.Xuj7NA.FeNNDkkcxCg3UjMPnLB5p1df5DM"
+from secret import TOKEN
 
 client = commands.Bot(command_prefix=";")
 
@@ -16,15 +15,16 @@ extensions = [
     "events.on_message",
     "events.on_ready",
 
+    "commands.about",
     "commands.dontasktoask",
     "commands.ping",
     "commands.say",
     "commands.tutorban",
     "commands.tutorunban",
 
-    "sessions.close_cmd",
-    "sessions.tutor_assign",
-    "sessions.tutor_unassign",
+    "commands.close",
+    "commands.assign",
+    "commands.unassign",
 ]
 
 for extension in extensions:

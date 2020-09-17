@@ -1,3 +1,6 @@
+BUILD_NUMBER = 52
+LAST_UPDATE_DATE = "September/17/2020"
+
 def combine_multiple_lines(lines):
     value = ""
     for line in lines:
@@ -37,20 +40,14 @@ TUTOR_ROLES = {
 BANNED_ASSIGN_TUTOR_ROLE = 703965433816023110
 
 def tsc_ongoing_session(user):
-    return f"__**How to ask for help:**__\n:question: | Post your question! *Don't just say \"help\".*\n:eye: | Add any images, sources, or texts that will help the tutors.\n:school_satchel: | Inform the tutor of what level the question is. *(e.g. trigonometry, calculus BC, stoichiometry)*\n\n**Once the above is complete, ping the respective tutor role once!**\n\n{user}"
+    return f"__**How to ask for help:**__\n:question: | Post your question! *Don't just say \"help\".*\n:eye: | Add any images, sources, or texts that will help the tutors.\n:school_satchel: | Inform the tutor of what level the question is. *(e.g. python3.8, geometry, us history)*\n\n**Once the above is complete, ping the respective tutor role once!**\n\n{user}"
 
-# AUTOJOIN SHIT
-HOUSE_ROLES = [
-    652137993594732564,
-    652137995532763136,
-    652137999496380417,
-    652137997525057557
-]
+# AUTOJOIN
 JOIN_MSG_CHANNEL = 630206335085969418
 
 PUBLIC_WELCOMER_MSG = combine_multiple_lines([
-    "<:kirbywave:644521817851035652> || {mention} has joined **The Study Corner**.",
-    "<@&671220549283741708> please give {mention} a warm welcome!"
+    "Hey, <@&671220549283741708>! {mention} has joined **The Study Corner**.",
+    "Please give them a proper welcome!"
 ])
 
 MUST_ADD_ROLES = [
@@ -85,16 +82,4 @@ PRIVATE_WELCOMER_MSG = combine_multiple_lines([
     f"{uni1} - https://gph.is/g/ZywQrrn"
 ])
 
-# ERROR HANDLING MSGS SHIT
-MISSING_ARGUMENTS_ERROR = "You are missing some arguments..."
-TOO_MANY_ARGUMENTS_ERROR = "You have too many arguments!"
-USER_INPUT_ERROR = "You have inputted your arguments wrong!"
-NO_PERMISSION_ERROR = "You do not have permission to do this..."
-BOT_NO_PERMISSION_ERROR = "I do not have permission to do this..."
-UNKNOWN_COMMAND_ERROR = "I have never heard of this command before."
-FAKE_ERROR = "An error has occurred. Please try again later."
-
-# MIGHT REMOVE
-PING_REE = [
-    
-]
+CLOSE_KEYWORDS = ["ty", "thanks", "thank", "tank", "tysm", "bye", "cya", "bai"]

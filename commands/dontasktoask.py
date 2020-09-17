@@ -1,9 +1,8 @@
-import json
 import discord
 from discord.ext import commands
 from vars import *
 
-class fun(commands.Cog):
+class miscellaneous(commands.Cog):
     def __init__(self, client):
         self.client = client
 
@@ -18,4 +17,4 @@ class fun(commands.Cog):
         await ctx.message.delete()
 
 def setup(bot):
-    bot.add_cog(fun(bot))
+    bot.add_cog(miscellaneous(bot))

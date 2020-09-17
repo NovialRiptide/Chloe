@@ -2,6 +2,14 @@ import discord
 from discord.ext import commands
 from vars import *
 
+MISSING_ARGUMENTS_ERROR = "You are missing some arguments..."
+TOO_MANY_ARGUMENTS_ERROR = "You have too many arguments!"
+USER_INPUT_ERROR = "You have inputted your arguments wrong!"
+NO_PERMISSION_ERROR = "You do not have permission to do this..."
+BOT_NO_PERMISSION_ERROR = "I do not have permission to do this..."
+UNKNOWN_COMMAND_ERROR = "I have never heard of this command before."
+FAKE_ERROR = "An error has occurred. Please try again later."
+
 class on_command_error_event(commands.Cog):
     def __init__(self, client):
         self.client = client
@@ -23,7 +31,7 @@ class on_command_error_event(commands.Cog):
         elif isinstance(error, commands.CommandOnCooldown):
             await ctx.send(error)
         else:
-            await ctx.send(f"Send this to the developer.```{error}```")
+            await ctx.send(f"Uh oh! An error occured.```{error}``` <@695502565668028468>")
 
 def setup(client):
     client.add_cog(on_command_error_event(client))
