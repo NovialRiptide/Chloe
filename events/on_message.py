@@ -36,7 +36,7 @@ class sessions(commands.Cog):
                     channel = dormant_category.channels[-1]
                     channel_history = await channel.history(limit=1).flatten()
                     await channel.edit(category=available_category, sync_permissions=True)
-                    await channel_history[0].edit(content=tsc_ongoing_session(""))
+                    await channel_history[0].edit(content=tsc_ongoing_session("") + "To get started, speak in this channel to start your session.")
             
             # IF SOMEHOW A PERSON WHO HAS ALREADY STARTED A SESSION CAN SEE OTHER AVAILABLE SESSIONS, 
             # IT WILL AUTO DELETE THEIR MESSAGE TO PREVENT ANOTHER SESSION FROM STARTING UP
