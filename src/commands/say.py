@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
-from vars import *
+from locals import *
+
 
 class miscellaneous(commands.Cog):
     def __init__(self, client):
@@ -11,6 +12,7 @@ class miscellaneous(commands.Cog):
     async def say(self, ctx, *, message: str):
         await ctx.send(message)
         await ctx.message.delete()
+
 
 def setup(bot):
     bot.add_cog(miscellaneous(bot))
