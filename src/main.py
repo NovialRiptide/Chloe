@@ -14,14 +14,12 @@ extensions = [
     "events.on_member_join",
     "events.on_message",
     "events.on_ready",
-
     "commands.about",
     "commands.dontasktoask",
     "commands.ping",
     "commands.say",
     "commands.tutorban",
     "commands.tutorunban",
-
     "commands.close",
     "commands.assign",
     "commands.unassign",
@@ -31,6 +29,8 @@ for extension in extensions:
     try:
         client.load_extension(extension)
     except Exception:
-        logger.error(f'Failed to load {extension} with error:\n{traceback.format_exc()}')
+        logger.error(
+            f"Failed to load {extension} with error:\n{traceback.format_exc()}"
+        )
 
 client.run(TOKEN)
