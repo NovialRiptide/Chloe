@@ -5,4 +5,5 @@ A Discord bot that manages sessions between a user and multiple tutors specifica
 
 ## Special Thanks
 **Lush** for giving me the opportunity to create a Discord bot for a server with over one thousand members.
+
 **Shauna** for vouching my skills.
