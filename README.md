@@ -1,3 +1,5 @@
+Warning: This code is very old and will most likely not work at all at its current state and does not represent my current skills as a programmer today.
+
 # Kenji
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
